@@ -41,7 +41,7 @@ export async function createParticipant(newPerson) {
 }
 export async function deleteParticpant(id) {
     const response = await client
-        .from('workshops')
+        .from('participants')
         .delete()
         .match({ id })
         .single();
