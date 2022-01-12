@@ -1,12 +1,37 @@
-const SUPABASE_URL = '';
-const SUPABASE_KEY = '';
+const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiYW5vbiIsImlhdCI6MTYzOTUwNzU3MywiZXhwIjoxOTU1MDgzNTczfQ.ItAD5AYhCLq3yVOxHVfShkrOdhiFsmpg3uT9tBIISV0';
 
+const SUPABASE_URL = 'https://nhbazqqortcneqwecrjp.supabase.co';
 const client = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
 export async function getUser() {
     return client.auth.session();
 }
 
+
+export async function getPartipants() {
+    const response = await client
+        .from('participants')
+        .select('*, workshops (*)');
+
+    return checkError(response);
+}
+
+export async function createWorkshop(workshop) {
+    const response = await client
+        .from('workshops')
+        .insert([workshop]);
+
+    return checkError(response);
+}
+export async function deleteWorkshop(id) {
+    const response = await client
+        .from('workshops')
+        .delete()
+        .match({ id })
+        .single();
+
+    return checkError(response);
+}
 
 export async function checkAuth() {
     const user = await getUser();
@@ -16,7 +41,7 @@ export async function checkAuth() {
 
 export async function redirectIfLoggedIn() {
     if (await getUser()) {
-        location.replace('./other-page');
+        location.replace('./workshop');
     }
 }
 
@@ -39,5 +64,6 @@ export async function logout() {
 }
 
 function checkError({ data, error }) {
+    // eslint-disable-next-line no-console
     return error ? console.error(error) : data;
 }
