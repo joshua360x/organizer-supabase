@@ -16,14 +16,30 @@ export async function getPartipants() {
     return checkError(response);
 }
 
+export async function getWorkshops() {
+    const response = await client
+        .from('workshops')
+        .select('*, participants (*)');
+
+    return checkError(response);
+}
+
 export async function createWorkshop(workshop) {
     const response = await client
         .from('workshops')
         .insert([workshop]);
+    return checkError(response);
+
+}
+
+export async function createParticipant(newPerson) {
+    const response = await client
+        .from('participants')
+        .insert([newPerson]);
 
     return checkError(response);
 }
-export async function deleteWorkshop(id) {
+export async function deleteParticpant(id) {
     const response = await client
         .from('workshops')
         .delete()
