@@ -16,7 +16,7 @@ test('time to test a function', async(expect) => {
         }]
     };
     // const workshops = await getWorkshops();
-    const expected = '<div><p>How to Eat Fish with Bones</p><li>bob</li></div>';
+    const expected = '<div><p>How to Eat Fish with Bones</p></div>';
     
     //Act 
     // Call the function you're testing and set the result to a const

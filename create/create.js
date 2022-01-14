@@ -20,6 +20,7 @@ formEL.addEventListener('submit', async(e) => {
         workshop: workshop_id,
         name
     });
+    
 });
 
 
