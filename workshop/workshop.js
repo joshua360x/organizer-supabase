@@ -1,4 +1,4 @@
-import { checkAuth, getWorkshops, logout } from '../fetch-utils.js';
+import { checkAuth, deleteParticpant, getWorkshops, logout } from '../fetch-utils.js';
 import { renderWorkshop } from '../render-utils.js';
 
 const partipantsEL = document.querySelector('.participants');
@@ -20,11 +20,29 @@ window.addEventListener('load', async() => {
 async function displayParticipants() {
 
     // const newDiv = await renderWorkshop(workshops)
-    
+    partipantsEL.textContent = '';
     const workshops = await getWorkshops();
     for (const workshop of workshops) {
         const newDiv = await renderWorkshop(workshop);
+        for (const el of workshop.participants) {
         
+            // const p1 = document.createElement('li');
+            
+            // p1.textContent = el.name;
+    
+            const partipantEL = document.createElement('li');
+            partipantEL.textContent = el.name;
+    
+    
+    
+            partipantEL.addEventListener('click', async() => {
+                await deleteParticpant(el.id);
+                await displayParticipants();
+                
+            });
+    
+            newDiv.append(partipantEL);
+        }
         partipantsEL.append(newDiv);
     }
     
